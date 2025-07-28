@@ -1,9 +1,11 @@
 package works.joyboy.cvbuilder.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import works.joyboy.cvbuilder.model.CVRequest;
 import works.joyboy.cvbuilder.service.DocumentGenerator;
 
+@Validated
 @RestController
 @RequestMapping("/cv")
 public class CVController {
@@ -25,7 +28,7 @@ public class CVController {
     }
 
     @PostMapping("/download/pdf")
-    public ResponseEntity<byte[]> downloadPdf(@RequestBody CVRequest request) {
+    public ResponseEntity<byte[]> downloadPdf(@Valid @RequestBody CVRequest request) {
         byte[] file = pdfGenerator.generate(request);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=cv.pdf")
@@ -34,7 +37,7 @@ public class CVController {
     }
 
     @PostMapping("/download/word")
-    public ResponseEntity<byte[]> downloadWord(@RequestBody CVRequest request) {
+    public ResponseEntity<byte[]> downloadWord(@Valid @RequestBody CVRequest request) {
         byte[] file = wordGenerator.generate(request);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=cv.docx")

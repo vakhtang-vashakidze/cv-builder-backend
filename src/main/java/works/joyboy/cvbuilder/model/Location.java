@@ -1,6 +1,9 @@
 package works.joyboy.cvbuilder.model;
 
-public record Location(String country, String city) {
+import jakarta.validation.constraints.NotBlank;
+
+public record Location(@NotBlank String city,
+                       @NotBlank String country) {
     public String full() {
         return country + ", " + city;
     }

@@ -105,7 +105,14 @@
     <div th:each="exp : ${experiences}" class="experience-block">
         <strong th:text="${exp.position}">Senior Software Engineer</strong> –
         <span th:text="${exp.company}">Joyboy.works</span>
-        <em th:text="${exp.period}">Jan 2025 - Present</em>
+        <em th:if="${exp.stillWorking()}"
+            th:text="${#temporals.format(exp.startDate(), 'MMM yyyy')} + ' - Present'">
+            Jan 2025 - Present
+        </em>
+        <em th:if="${!exp.stillWorking()}"
+            th:text="${#temporals.format(exp.startDate(), 'MMM yyyy')} + ' - ' + ${#temporals.format(exp.endDate(), 'MMM yyyy')}">
+            Jan 2023 - May 2024
+        </em>
         <p th:text="${exp.description}">Developed services...</p>
     </div>
 </div>

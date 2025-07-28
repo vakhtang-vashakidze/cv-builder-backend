@@ -1,6 +1,9 @@
 package works.joyboy.cvbuilder.model;
 
-public record PhoneNumber(String prefix, String number) {
+import jakarta.validation.constraints.NotBlank;
+
+public record PhoneNumber(@NotBlank String prefix,
+                          @NotBlank String number) {
     public String full() {
         return prefix + " " + number;
     }

@@ -3,6 +3,7 @@ package works.joyboy.cvbuilder.service.impl;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.xhtmlrenderer.pdf.ITextRenderer;
+import works.joyboy.cvbuilder.exceptions.GeneralDocumentGenerationException;
 import works.joyboy.cvbuilder.model.CVRequest;
 import works.joyboy.cvbuilder.service.DocumentGenerator;
 
@@ -19,7 +20,7 @@ public class PdfGenerator implements DocumentGenerator {
 
     @Override
     public byte[] generate(CVRequest request) {
-        String html = loadTemplateHtml(templateEngine, "cv-template", request);
+        String html = loadTemplateHtml(templateEngine, "basic-cv-template", request);
 
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             ITextRenderer renderer = new ITextRenderer();
@@ -28,7 +29,7 @@ public class PdfGenerator implements DocumentGenerator {
             renderer.createPDF(outputStream);
             return outputStream.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("PDF generation failed", e);
+            throw new GeneralDocumentGenerationException("PDF generation failed", e);
         }
     }
 }

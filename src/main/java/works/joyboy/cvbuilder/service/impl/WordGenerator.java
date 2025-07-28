@@ -4,6 +4,7 @@ import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
+import works.joyboy.cvbuilder.exceptions.GeneralDocumentGenerationException;
 import works.joyboy.cvbuilder.model.CVRequest;
 import works.joyboy.cvbuilder.service.DocumentGenerator;
 
@@ -21,7 +22,7 @@ public class WordGenerator implements DocumentGenerator {
     @Override
     public byte[] generate(CVRequest request) {
         try {
-            String html = loadTemplateHtml(templateEngine, "cv-template", request);
+            String html = loadTemplateHtml(templateEngine, "basic-cv-template", request);
 
             WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage();
             XHTMLImporterImpl xhtmlImporter = new XHTMLImporterImpl(wordMLPackage);
@@ -33,7 +34,7 @@ public class WordGenerator implements DocumentGenerator {
             return outputStream.toByteArray();
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to generate Word document", e);
+            throw new GeneralDocumentGenerationException("Failed to generate Word document", e);
         }
     }
 }
