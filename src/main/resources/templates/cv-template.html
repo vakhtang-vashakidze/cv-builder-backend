@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 25px;
+            font-size: 18px;
+            color: #444;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            padding-left: 20px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .section {
+            text-align: left;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .info-line {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .info-item {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        .experience-block {
+            margin-bottom: 20px;
+        }
+
+        .experience-block strong {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .experience-block span {
+            display: inline-block;
+            font-style: italic;
+        }
+
+        .experience-block em {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .experience-block p {
+            margin-top: 5px;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+
+<h1 th:text="${name}">John Doe</h1>
+
+<div class="info-line">
+    <span class="info-item" th:text="${title}">Senior Software Engineer</span>
+    <span class="info-item" th:text="${location}">Somewhere, Somewhere</span>
+    <span class="info-item">
+        <a th:href="'mailto:' + ${email}" th:text="${email}">example@email.com</a>
+    </span>
+
+    <span class="info-item">
+        <a th:href="'tel:' + ${phoneNumber}" th:text="${phoneNumber}">+995 555 555 555</a>
+    </span>
+</div>
+
+<div class="section">
+    <h2>Summary</h2>
+    <p th:text="${summary}">Experienced Software Engineer.</p>
+</div>
+
+<div class="section">
+    <h2>Skills</h2>
+    <ul>
+        <li th:each="skill : ${skills}" th:text="${skill}">Java</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Experience</h2>
+    <div th:each="exp : ${experiences}" class="experience-block">
+        <strong th:text="${exp.position}">Senior Software Engineer</strong> –
+        <span th:text="${exp.company}">Joyboy.works</span>
+        <em th:text="${exp.period}">Jan 2025 - Present</em>
+        <p th:text="${exp.description}">Developed services...</p>
+    </div>
+</div>
+
+</body>
+</html>
