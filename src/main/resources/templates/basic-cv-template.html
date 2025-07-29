@@ -2,95 +2,93 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
+    <title>CV - [[${name}]]</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
+            margin: 40px;
+            padding: 0;
+            line-height: 1.5;
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 10px;
-        }
-
-        h2 {
-            margin-top: 25px;
-            font-size: 18px;
-            color: #444;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 5px;
-        }
-
-        ul {
-            padding-left: 20px;
-            text-align: left;
-            display: inline-block;
-        }
-
-        .section {
-            text-align: left;
-            display: inline-block;
-            width: 100%;
+            text-align: center;
         }
 
         .info-line {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             font-size: 14px;
         }
+        .info-line p {
+            margin: 0;
+        }
 
-        .info-item {
-            display: inline-block;
-            margin: 0 15px;
+        h2 {
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 4px;
+            color: #333;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            font-size: 14px;
+            margin-bottom: 4px;
         }
 
         .experience-block {
             margin-bottom: 20px;
         }
 
-        .experience-block strong {
-            display: inline-block;
+        .experience-title {
             font-weight: bold;
+            font-size: 15px;
         }
 
-        .experience-block span {
-            display: inline-block;
+        .experience-company {
             font-style: italic;
+            font-size: 14px;
         }
 
-        .experience-block em {
-            display: block;
-            margin-bottom: 5px;
+        .experience-dates {
             font-size: 13px;
             color: #666;
+            margin-bottom: 6px;
         }
 
-        .experience-block p {
-            margin-top: 5px;
+        .experience-description {
+            font-size: 14px;
         }
     </style>
-    <title></title>
 </head>
 <body>
 
 <h1 th:text="${name}">John Doe</h1>
 
 <div class="info-line">
-    <span class="info-item" th:text="${title}">Senior Software Engineer</span>
-    <span class="info-item" th:text="${location}">Somewhere, Somewhere</span>
-    <span class="info-item">
-        <a th:href="'mailto:' + ${email}" th:text="${email}">example@email.com</a>
-    </span>
-
-    <span class="info-item">
-        <a th:href="'tel:' + ${phoneNumber}" th:text="${phoneNumber}">+995 555 555 555</a>
-    </span>
+    <p>
+        <span th:text="${title}">Senior Software Engineer</span> •
+        <span th:text="${location}">Tbilisi, Georgia</span> •
+        <a th:href="'mailto:' + ${email}" th:text="${email}">email@example.com</a> •
+        <a th:href="'tel:' + ${phoneNumber}" th:text="${phoneNumber}">+995 598 260 059</a>
+    </p>
 </div>
 
 <div class="section">
     <h2>Summary</h2>
-    <p th:text="${summary}">Experienced Software Engineer.</p>
+    <p th:text="${summary}">An experienced and driven software engineer...</p>
 </div>
 
 <div class="section">
@@ -103,17 +101,15 @@
 <div class="section">
     <h2>Experience</h2>
     <div th:each="exp : ${experiences}" class="experience-block">
-        <strong th:text="${exp.position}">Senior Software Engineer</strong> –
-        <span th:text="${exp.company}">Joyboy.works</span>
-        <em th:if="${exp.stillWorking()}"
-            th:text="${#temporals.format(exp.startDate(), 'MMM yyyy')} + ' - Present'">
-            Jan 2025 - Present
-        </em>
-        <em th:if="${!exp.stillWorking()}"
-            th:text="${#temporals.format(exp.startDate(), 'MMM yyyy')} + ' - ' + ${#temporals.format(exp.endDate(), 'MMM yyyy')}">
-            Jan 2023 - May 2024
-        </em>
-        <p th:text="${exp.description}">Developed services...</p>
+        <div class="experience-title" th:text="${exp.position}">Senior Developer</div>
+        <div class="experience-company" th:text="${exp.company}">Company Name</div>
+        <div class="experience-dates">
+            <span th:if="${exp.stillWorking()}"
+                  th:text="${#temporals.format(exp.startDate(), 'MMM yyyy')} + ' - Present'">Jan 2023 - Present</span>
+            <span th:if="${!exp.stillWorking()}"
+                  th:text="${#temporals.format(exp.startDate(), 'MMM yyyy')} + ' - ' + ${#temporals.format(exp.endDate(), 'MMM yyyy')}">Jan 2020 - Dec 2022</span>
+        </div>
+        <div class="experience-description" th:text="${exp.description}">Worked on microservices architecture...</div>
     </div>
 </div>
 
